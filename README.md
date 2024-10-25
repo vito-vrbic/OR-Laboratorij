@@ -72,11 +72,11 @@ The database itself contains the following tables:
 
 #### Song Table
 
-| Column Name | Data Type    | Description                                          |
-|-------------|--------------|------------------------------------------------------|
-| Song_Title  | VARCHAR(100) | Title of the song                                   |
-| Track_Number| INT          | Track number of the song                            |
-| Duration    | INT          | Duration of the song (must be > 0)                  |
+| Column Name | Data Type    | Description                                           |
+|-------------|--------------|------------------------------------------------------ |
+| Song_Title  | VARCHAR(100) | Title of the song                                     |
+| Track_Number| INT          | Track number of the song                              |
+| Duration    | INT          | Duration of the song in seconds (must be > 0)         |
 | Album_ID    | INT          | ID of the album (Foreign Key referencing Album(Album_ID))|
 | Primary Key | (Track_Number, Album_ID) | Combined primary key                          |
 
