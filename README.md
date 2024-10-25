@@ -146,7 +146,7 @@ October 2024.
 This repository and dataset was created by **Vito Vrbić**. 
 
 
-### Contakt
+### Contact
 
 For any questions or inquiries, you can contact me at: vito.vrbic@unizg.fer.hr
 
