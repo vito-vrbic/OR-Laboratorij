@@ -14,7 +14,104 @@ The data is available in the following formats:
 
 ### Database
 
-The accompanying image shows the ER model of the database containing this dataset: ![ER Model](https://github.com/user-attachments/assets/07e63a54-8454-40d9-b997-dcd41efac844)
+The accompanying image shows the ER model of the database containing this dataset: ![ER Model](https://github.com/user-attachments/assets/36f5813d-a966-4626-a25f-dfba20a13d7c)
+
+The database itself contains the following tables:
+#### Person Table
+
+| Column Name | Data Type    | Description                       |
+|-------------|--------------|-----------------------------------|
+| Artist_Name | VARCHAR(100) | The full artist name (Primary Key)|
+| First_Name  | VARCHAR(100) | First name if applicable          |
+| Last_Name   | VARCHAR(100) | Last name if applicable           |
+
+---
+
+#### Genre Table
+
+| Column Name | Data Type    | Description                       |
+|-------------|--------------|-----------------------------------|
+| Genre_Name  | VARCHAR(100) | Genre name (Primary Key)          |
+
+---
+
+#### Style Table
+
+| Column Name | Data Type    | Description                       |
+|-------------|--------------|-----------------------------------|
+| Style_Name  | VARCHAR(100) | Style name (Primary Key)          |
+
+---
+
+#### RLabel Table
+
+| Column Name | Data Type    | Description                       |
+|-------------|--------------|-----------------------------------|
+| RLabel_Name | VARCHAR(100) | Record label name (Primary Key)   |
+
+---
+
+#### Country Table
+
+| Column Name  | Data Type    | Description                       |
+|--------------|--------------|-----------------------------------|
+| Country_Name | VARCHAR(100) | Country name (Primary Key)        |
+
+---
+
+#### Type Table
+
+| Column Name | Data Type    | Description                       |
+|-------------|--------------|-----------------------------------|
+| Type_Name   | VARCHAR(100) | Type name (Primary Key)           |
+
+---
+
+#### Album Table
+
+| Column Name         | Data Type    | Description                                                             |
+|---------------------|--------------|-------------------------------------------------------------------------|
+| Album_ID            | INT          | Unique identifier for the album (Primary Key)                          |
+| Album_Title         | VARCHAR(100) | Title of the album                                                     |
+| Release_Year        | INT          | Year of release (must be > 0 and <= 2100)                             |
+| Number_of_Singles   | INT          | Number of singles (must be >= 0)                                      |
+| Genre_Name          | VARCHAR(100) | Genre of the album (Foreign Key referencing Genre(Genre_Name))        |
+| Style_Name          | VARCHAR(100) | Style of the album (Foreign Key referencing Style(Style_Name))        |
+| RLabel_Name         | VARCHAR(100) | Record label of the album (Foreign Key referencing RLabel(RLabel_Name))|
+| Country_Name        | VARCHAR(100) | Country of the album (Foreign Key referencing Country(Country_Name))  |
+| Type_Name           | VARCHAR(100) | Type of the album (Foreign Key referencing Type(Type_Name))           |
+
+---
+
+#### Song Table
+
+| Column Name | Data Type    | Description                                          |
+|-------------|--------------|------------------------------------------------------|
+| Song_Title  | VARCHAR(100) | Title of the song                                   |
+| Track_Number| INT          | Track number of the song                            |
+| Duration    | INT          | Duration of the song (must be > 0)                  |
+| Album_ID    | INT          | ID of the album (Foreign Key referencing Album(Album_ID))|
+| Primary Key | (Track_Number, Album_ID) | Combined primary key                          |
+
+---
+
+#### produced_by Table
+
+| Column Name   | Data Type    | Description                                          |
+|---------------|--------------|------------------------------------------------------|
+| Album_ID      | INT          | ID of the album (Foreign Key referencing Album(Album_ID))|
+| Artist_Name   | VARCHAR(100) | Name of the artist (Foreign Key referencing Person(Artist_Name))|
+| Primary Key   | (Album_ID, Artist_Name) | Combined primary key                     |
+
+---
+
+#### performed_by Table
+
+| Column Name   | Data Type    | Description                                          |
+|---------------|--------------|------------------------------------------------------|
+| Album_ID      | INT          | ID of the album (Foreign Key referencing Album(Album_ID))|
+| Artist_Name   | VARCHAR(100) | Name of the artist (Foreign Key referencing Person(Artist_Name))|
+| Primary Key   | (Album_ID, Artist_Name) | Combined primary key                     |
 
 ### CSV
 
@@ -40,7 +137,9 @@ PostgreSQL database, pgAdmin 4 development platform, and functions for exporting
 
 ### Data Sources
 
-- [MusicBrainz](https://www.musicbrainz.org)
+- [MusicBrainz](https://www.musicbrainz.org) (core data, licensed under CC0)
+- [Discogs](https://www.discogs.com) (CC0 data, factual data sourced within Discogs terms of use)
+- [Wikidata](https://www.wikidata.org) (licensed under CC0)
 
 ### Dataset Version
 1.0
@@ -55,7 +154,7 @@ October 2024.
 This repository and dataset was created by **Vito Vrbić**. 
 
 
-### Contact
+### Contakt
 
 For any questions or inquiries, you can contact me at: vito.vrbic@unizg.fer.hr
 
