@@ -14,7 +14,8 @@ The data is available in the following formats:
 
 ### Database
 
-The accompanying image shows the ER model of the database containing this dataset: ![ER Model](https://github.com/user-attachments/assets/36f5813d-a966-4626-a25f-dfba20a13d7c)
+The accompanying image shows the ER model of the database containing this dataset: ![ER Model](https://github.com/user-attachments/assets/6606ea55-651d-4b2b-b6a2-ba7ad4182ad3)
+
 
 The database itself contains the following tables:
 #### Person Table
