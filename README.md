@@ -7,8 +7,8 @@ This repository and dataset have been created as an exercise for the course [Ope
 ## Formats
 
 The data is available in the following formats:
-- CSV: [albums.csv](./albums.csv)
-- JSON: [albums.json](./albums.json)
+- CSV: [albums.csv](./data/albums.csv)
+- JSON: [albums.json](./data/albums.json)
 
 ## Data Structure
 
