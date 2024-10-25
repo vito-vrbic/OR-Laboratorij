@@ -96,7 +96,7 @@ The database itself contains the following tables:
 | Artist_Name   | VARCHAR(100) | Name of the artist (Foreign Key referencing Person(Artist_Name))|
 | Primary Key   | (Album_ID, Artist_Name) | Combined primary key                     |
 
-### CSV & JSON
+### CSV & JSON Attributes
 
 The dataset is provided in CSV format with the following columns/in JSON with the following keys:
 - AlbumTitle - The title of the album.
@@ -107,7 +107,9 @@ The dataset is provided in CSV format with the following columns/in JSON with th
 - ReleaseLabel - The label of the album release.
 - Country - The origin country of the album.
 - Type - The type of the album (studio album, EP, etc.)
-- SongTitle - The title of a song on the album. TODO MAKE THE SONG DURATION AND POSITION ON THE ALBUM BE SHOWN TOO.
+- SongTitle - The title of a song on the album.
+- TrackNumber - The order number of the song on the album.
+- Duration - The duration of the song.
 - ProducedBy - The producers of the album.
 - PerformedBy - The performers of the album.
 
@@ -115,7 +117,7 @@ The dataset is provided in CSV format with the following columns/in JSON with th
 
 ### Dimensions of the Dataset
 
-This dataset contains ... albums and ... songs.
+This dataset contains 12 albums and 149 songs.
 
 ### Language of the Dataset
 
