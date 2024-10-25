@@ -1,6 +1,6 @@
 # Dataset: Music Albums and Songs
 
-This repository contains an open dataset of music albums and songs. The data included in this dataset is factual information about albums (album title, artists, release year, genre, style, number of singles, record label, country of release, type), as well as factual information about songs (title, track number on the album, duration) within each album.
+This repository contains an open dataset of music albums and songs. The data included in this dataset is factual information about albums (album title, artists, producers, release year, genre, style, number of singles, record label, country of release, type), as well as factual information about songs (title, track number on the album, duration) within each album.
 
 This repository and dataset have been created as an exercise for the course [Open Computing](https://www.fer.unizg.hr/en/course/opecom_b) at [University of Zagreb Faculty of Electrical Engineering and Computing](https://www.fer.unizg.hr/en).
 
