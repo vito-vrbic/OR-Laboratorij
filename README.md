@@ -1,6 +1,8 @@
 # Dataset: Music Albums and Songs
 
-This repository contains an open dataset of music albums and songs. The data includes factual information about albums (album title, artist, release year, genre, style, number of songs, record label, country of release, type, number of singles on the album), as well as factual information about songs (title, track number on the album, duration) within each album.
+This repository contains an open dataset of music albums and songs. The data included in this dataset is factual information about albums (album title, artists, release year, genre, style, number of singles, record label, country of release, type), as well as factual information about songs (title, track number on the album, duration) within each album.
+
+This repository and dataset have been created as an exercise for the course [Open Computing](https://www.fer.unizg.hr/en/course/opecom_b) at [University of Zagreb Faculty of Electrical Engineering and Computing](https://www.fer.unizg.hr/en).
 
 ## Formats
 
@@ -12,7 +14,7 @@ The data is available in the following formats:
 
 ### Database
 
-The accompanying image shows the ER model of the database containing this dataset:
+The accompanying image shows the ER model of the database containing this dataset: ![ER Model](https://github.com/user-attachments/assets/36f5813d-a966-4626-a25f-dfba20a13d7c)
 
 ### CSV
 
@@ -38,19 +40,20 @@ PostgreSQL database, pgAdmin 4 development platform, and functions for exporting
 
 ### Data Sources
 
-- [MusicBrainz](musicbrainz.org)
-- [Discogs](discogs.com)
+- [MusicBrainz](https://www.musicbrainz.org)
 
 ### Dataset Version
 1.0
  
-### Last updated: 
+### Last updated:
+
 
 October 2024.
 
 ### Author
 
-This repository and dataset was created by Vito Vrbić.
+This repository and dataset was created by **Vito Vrbić**. 
+
 
 ### Contakt
 
