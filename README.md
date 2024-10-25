@@ -14,7 +14,7 @@ The data is available in the following formats:
 
 ### Database
 
-The accompanying image shows the ER model of the database containing this dataset: ![ER Model](https://github.com/user-attachments/assets/36f5813d-a966-4626-a25f-dfba20a13d7c)
+The accompanying image shows the ER model of the database containing this dataset: ![ER Model](https://github.com/user-attachments/assets/07e63a54-8454-40d9-b997-dcd41efac844)
 
 ### CSV
 
