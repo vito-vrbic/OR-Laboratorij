@@ -26,15 +26,11 @@ The database itself contains the following tables:
 | First_Name  | VARCHAR(100) | First name if applicable          |
 | Last_Name   | VARCHAR(100) | Last name if applicable           |
 
----
-
 #### Genre Table
 
 | Column Name | Data Type    | Description                       |
 |-------------|--------------|-----------------------------------|
 | Genre_Name  | VARCHAR(100) | Genre name (Primary Key)          |
-
----
 
 #### Style Table
 
@@ -42,15 +38,11 @@ The database itself contains the following tables:
 |-------------|--------------|-----------------------------------|
 | Style_Name  | VARCHAR(100) | Style name (Primary Key)          |
 
----
-
 #### RLabel Table
 
 | Column Name | Data Type    | Description                       |
 |-------------|--------------|-----------------------------------|
 | RLabel_Name | VARCHAR(100) | Record label name (Primary Key)   |
-
----
 
 #### Country Table
 
@@ -58,15 +50,11 @@ The database itself contains the following tables:
 |--------------|--------------|-----------------------------------|
 | Country_Name | VARCHAR(100) | Country name (Primary Key)        |
 
----
-
 #### Type Table
 
 | Column Name | Data Type    | Description                       |
 |-------------|--------------|-----------------------------------|
 | Type_Name   | VARCHAR(100) | Type name (Primary Key)           |
-
----
 
 #### Album Table
 
@@ -82,8 +70,6 @@ The database itself contains the following tables:
 | Country_Name        | VARCHAR(100) | Country of the album (Foreign Key referencing Country(Country_Name))  |
 | Type_Name           | VARCHAR(100) | Type of the album (Foreign Key referencing Type(Type_Name))           |
 
----
-
 #### Song Table
 
 | Column Name | Data Type    | Description                                          |
@@ -94,8 +80,6 @@ The database itself contains the following tables:
 | Album_ID    | INT          | ID of the album (Foreign Key referencing Album(Album_ID))|
 | Primary Key | (Track_Number, Album_ID) | Combined primary key                          |
 
----
-
 #### produced_by Table
 
 | Column Name   | Data Type    | Description                                          |
@@ -103,8 +87,6 @@ The database itself contains the following tables:
 | Album_ID      | INT          | ID of the album (Foreign Key referencing Album(Album_ID))|
 | Artist_Name   | VARCHAR(100) | Name of the artist (Foreign Key referencing Person(Artist_Name))|
 | Primary Key   | (Album_ID, Artist_Name) | Combined primary key                     |
-
----
 
 #### performed_by Table
 
