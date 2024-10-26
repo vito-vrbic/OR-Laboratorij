@@ -107,11 +107,18 @@ The dataset is provided in CSV format with the following columns/in JSON with th
 - ReleaseLabel - The label of the album release.
 - Country - The origin country of the album.
 - Type - The type of the album (studio album, EP, etc.)
-- SongTitle - The title of a song on the album.
-- TrackNumber - The order number of the song on the album.
-- Duration - The duration of the song.
-- ProducedBy - The producers of the album.
-- PerformedBy - The performers of the album.
+- Songs - The songs in the album. ***(Not in CSV, array in JSON)***
+  - SongTitle - The title of a song on the album.
+  - TrackNumber - The order number of the song on the album.
+  - Duration - The duration of the song.
+- Producers - The producers of the album. ***(Not in CSV, array in JSON)***
+  - ProducerArtistName - The producer's artist name.
+  - ProducerFirstName - The producer's first name (if applicable).
+  - ProducerLastName - The producer's last name (if applicable).
+- Performers - The performers of the album. ***(Not in CSV, array in JSON)***
+  - PerformerArtistName - The performer's artist name.
+  - PerformerFirstName - The performer's first name (if applicable).
+  - PerformerLastName - The performer's last name (if applicable).
 
 ## Additional Information
 
