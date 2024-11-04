@@ -141,17 +141,16 @@ PostgreSQL database, pgAdmin 4 development platform, and functions for exporting
 - [Wikidata](https://www.wikidata.org) (licensed under CC0)
 
 ### Dataset Version
-1.0
+
+2.0
  
 ### Last updated:
 
-
-October 2024.
+November, 2024.
 
 ### Author
 
 This repository and dataset was created by **Vito Vrbić**. 
-
 
 ### Contact
 
