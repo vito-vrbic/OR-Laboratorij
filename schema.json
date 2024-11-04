@@ -1,6 +1,6 @@
 {
     "$schema": "https://json-schema.org/draft/2019-09/schema",
-    "$id": "",
+    "$id": "https://github.com/vito-vrbic/OR-Laboratorij/blob/main/schema.json",
     "type": "array",
     "default": [],
     "title": "Albums Dataset Schema",
