@@ -1,0 +1,682 @@
+{
+    "$schema": "https://json-schema.org/draft/2019-09/schema",
+    "$id": "",
+    "type": "array",
+    "default": [],
+    "title": "Albums Dataset Schema",
+    "description": "This schema represents a json array of album objects.",
+    "items": {
+        "type": "object",
+        "title": "A Schema",
+        "required": [
+            "AlbumTitle",
+            "ReleaseYear",
+            "NumberOfSingles",
+            "Genre",
+            "Style",
+            "ReleaseLabel",
+            "Country",
+            "Type",
+            "Songs",
+            "Producers",
+            "Performers"
+        ],
+        "properties": {
+            "AlbumTitle": {
+                "type": "string",
+                "title": "The AlbumTitle Schema",
+                "examples": [
+                    "A Rainbow in Curved Air",
+                    "The Velvet Underground \u0026 Nico"
+                ]
+            },
+            "ReleaseYear": {
+                "type": "integer",
+                "title": "The ReleaseYear Schema",
+                "examples": [
+                    1969,
+                    1967
+                ]
+            },
+            "NumberOfSingles": {
+                "type": "integer",
+                "title": "The NumberOfSingles Schema",
+                "examples": [
+                    2
+                ]
+            },
+            "Genre": {
+                "type": "string",
+                "title": "The Genre Schema",
+                "examples": [
+                    "Minimal",
+                    "Rock"
+                ]
+            },
+            "Style": {
+                "type": "string",
+                "title": "The Style Schema",
+                "examples": [
+                    "Minimal Ambient",
+                    "Experimental Rock"
+                ]
+            },
+            "ReleaseLabel": {
+                "type": "string",
+                "title": "The ReleaseLabel Schema",
+                "examples": [
+                    "Columbia Masterworks",
+                    "Verve Records"
+                ]
+            },
+            "Country": {
+                "type": "string",
+                "title": "The Country Schema",
+                "examples": [
+                    "United States of America"
+                ]
+            },
+            "Type": {
+                "type": "string",
+                "title": "The Type Schema",
+                "examples": [
+                    "Studio Album"
+                ]
+            },
+            "Songs": {
+                "type": "array",
+                "title": "The Songs Schema",
+                "items": {
+                    "type": "object",
+                    "title": "A Schema",
+                    "required": [
+                        "SongTitle",
+                        "TrackNumber",
+                        "Duration"
+                    ],
+                    "properties": {
+                        "SongTitle": {
+                            "type": "string",
+                            "title": "The SongTitle Schema",
+                            "examples": [
+                                "A Rainbow in Curved Air",
+                                "Poppy Nogood and the Phantom Band",
+                                "Sunday Morning",
+                                "I'm Waiting for the Man",
+                                "Femme Fatale",
+                                "Venus In Furs",
+                                "Run Run Run",
+                                "All Tomorrow's Parties",
+                                "Heroin",
+                                "There She Goes Again",
+                                "I'll Be Your Mirror",
+                                "The Black Angel's Death Song",
+                                "European Son"
+                            ]
+                        },
+                        "TrackNumber": {
+                            "type": "integer",
+                            "title": "The TrackNumber Schema",
+                            "examples": [
+                                1,
+                                2,
+                                3,
+                                4,
+                                5,
+                                6,
+                                7,
+                                8,
+                                9,
+                                10,
+                                11
+                            ]
+                        },
+                        "Duration": {
+                            "type": "integer",
+                            "title": "The Duration Schema",
+                            "examples": [
+                                1127,
+                                1300,
+                                173,
+                                277,
+                                155,
+                                307,
+                                258,
+                                355,
+                                425,
+                                150,
+                                121,
+                                190,
+                                460
+                            ]
+                        }
+                    },
+                    "examples": [{
+                        "SongTitle": "A Rainbow in Curved Air",
+                        "TrackNumber": 1,
+                        "Duration": 1127
+                    },
+                    {
+                        "SongTitle": "Poppy Nogood and the Phantom Band",
+                        "TrackNumber": 2,
+                        "Duration": 1300
+                    },
+                    {
+                        "SongTitle": "Sunday Morning",
+                        "TrackNumber": 1,
+                        "Duration": 173
+                    },
+                    {
+                        "SongTitle": "I'm Waiting for the Man",
+                        "TrackNumber": 2,
+                        "Duration": 277
+                    },
+                    {
+                        "SongTitle": "Femme Fatale",
+                        "TrackNumber": 3,
+                        "Duration": 155
+                    },
+                    {
+                        "SongTitle": "Venus In Furs",
+                        "TrackNumber": 4,
+                        "Duration": 307
+                    },
+                    {
+                        "SongTitle": "Run Run Run",
+                        "TrackNumber": 5,
+                        "Duration": 258
+                    },
+                    {
+                        "SongTitle": "All Tomorrow's Parties",
+                        "TrackNumber": 6,
+                        "Duration": 355
+                    },
+                    {
+                        "SongTitle": "Heroin",
+                        "TrackNumber": 7,
+                        "Duration": 425
+                    },
+                    {
+                        "SongTitle": "There She Goes Again",
+                        "TrackNumber": 8,
+                        "Duration": 150
+                    },
+                    {
+                        "SongTitle": "I'll Be Your Mirror",
+                        "TrackNumber": 9,
+                        "Duration": 121
+                    },
+                    {
+                        "SongTitle": "The Black Angel's Death Song",
+                        "TrackNumber": 10,
+                        "Duration": 190
+                    },
+                    {
+                        "SongTitle": "European Son",
+                        "TrackNumber": 11,
+                        "Duration": 460
+                    }]
+                },
+                "examples": [
+                    [{
+                        "SongTitle": "A Rainbow in Curved Air",
+                        "TrackNumber": 1,
+                        "Duration": 1127
+                    },
+                    {
+                        "SongTitle": "Poppy Nogood and the Phantom Band",
+                        "TrackNumber": 2,
+                        "Duration": 1300
+                    }],
+                    [{
+                        "SongTitle": "Sunday Morning",
+                        "TrackNumber": 1,
+                        "Duration": 173
+                    },
+                    {
+                        "SongTitle": "I'm Waiting for the Man",
+                        "TrackNumber": 2,
+                        "Duration": 277
+                    },
+                    {
+                        "SongTitle": "Femme Fatale",
+                        "TrackNumber": 3,
+                        "Duration": 155
+                    },
+                    {
+                        "SongTitle": "Venus In Furs",
+                        "TrackNumber": 4,
+                        "Duration": 307
+                    },
+                    {
+                        "SongTitle": "Run Run Run",
+                        "TrackNumber": 5,
+                        "Duration": 258
+                    },
+                    {
+                        "SongTitle": "All Tomorrow's Parties",
+                        "TrackNumber": 6,
+                        "Duration": 355
+                    },
+                    {
+                        "SongTitle": "Heroin",
+                        "TrackNumber": 7,
+                        "Duration": 425
+                    },
+                    {
+                        "SongTitle": "There She Goes Again",
+                        "TrackNumber": 8,
+                        "Duration": 150
+                    },
+                    {
+                        "SongTitle": "I'll Be Your Mirror",
+                        "TrackNumber": 9,
+                        "Duration": 121
+                    },
+                    {
+                        "SongTitle": "The Black Angel's Death Song",
+                        "TrackNumber": 10,
+                        "Duration": 190
+                    },
+                    {
+                        "SongTitle": "European Son",
+                        "TrackNumber": 11,
+                        "Duration": 460
+                    }]
+                ]
+            },
+            "Producers": {
+                "type": "array",
+                "title": "The Producers Schema",
+                "items": {
+                    "type": "object",
+                    "title": "A Schema",
+                    "required": [
+                        "ProducerArtistName",
+                        "ProducerFirstName",
+                        "ProducerLastName"
+                    ],
+                    "properties": {
+                        "ProducerArtistName": {
+                            "type": "string",
+                            "title": "The ProducerArtistName Schema",
+                            "examples": [
+                                "David Behrman",
+                                "The Velvet Underground",
+                                "Andy Warhol"
+                            ]
+                        },
+                        "ProducerFirstName": {
+                            "type": [
+                                "string",
+                                "null"
+                            ],
+                            "title": "The ProducerFirstName Schema",
+                            "examples": [
+                                "David",
+                                null,
+                                "Andy"
+                            ]
+                        },
+                        "ProducerLastName": {
+                            "type": [
+                                "string",
+                                "null"
+                            ],
+                            "title": "The ProducerLastName Schema",
+                            "examples": [
+                                "Behrman",
+                                null,
+                                "Warhol"
+                            ]
+                        }
+                    },
+                    "examples": [{
+                        "ProducerArtistName": "David Behrman",
+                        "ProducerFirstName": "David",
+                        "ProducerLastName": "Behrman"
+                    },
+                    {
+                        "ProducerArtistName": "The Velvet Underground",
+                        "ProducerFirstName": null,
+                        "ProducerLastName": null
+                    },
+                    {
+                        "ProducerArtistName": "Andy Warhol",
+                        "ProducerFirstName": "Andy",
+                        "ProducerLastName": "Warhol"
+                    }]
+                },
+                "examples": [
+                    [{
+                        "ProducerArtistName": "David Behrman",
+                        "ProducerFirstName": "David",
+                        "ProducerLastName": "Behrman"
+                    }],
+                    [{
+                        "ProducerArtistName": "The Velvet Underground",
+                        "ProducerFirstName": null,
+                        "ProducerLastName": null
+                    },
+                    {
+                        "ProducerArtistName": "Andy Warhol",
+                        "ProducerFirstName": "Andy",
+                        "ProducerLastName": "Warhol"
+                    }]
+                ]
+            },
+            "Performers": {
+                "type": "array",
+                "title": "The Performers Schema",
+                "items": {
+                    "type": "object",
+                    "title": "A Schema",
+                    "required": [
+                        "PerformerArtistName",
+                        "PerformerFirstName",
+                        "PerformerLastName"
+                    ],
+                    "properties": {
+                        "PerformerArtistName": {
+                            "type": "string",
+                            "title": "The PerformerArtistName Schema",
+                            "examples": [
+                                "Terry Riley",
+                                "The Velvet Underground",
+                                "Nico"
+                            ]
+                        },
+                        "PerformerFirstName": {
+                            "type": [
+                                "string",
+                                "null"
+                            ],
+                            "title": "The PerformerFirstName Schema",
+                            "examples": [
+                                "Terry",
+                                null,
+                                "Christa"
+                            ]
+                        },
+                        "PerformerLastName": {
+                            "type": [
+                                "string",
+                                "null"
+                            ],
+                            "title": "The PerformerLastName Schema",
+                            "examples": [
+                                "Riley",
+                                null,
+                                "Päffgen"
+                            ]
+                        }
+                    },
+                    "examples": [{
+                        "PerformerArtistName": "Terry Riley",
+                        "PerformerFirstName": "Terry",
+                        "PerformerLastName": "Riley"
+                    },
+                    {
+                        "PerformerArtistName": "The Velvet Underground",
+                        "PerformerFirstName": null,
+                        "PerformerLastName": null
+                    },
+                    {
+                        "PerformerArtistName": "Nico",
+                        "PerformerFirstName": "Christa",
+                        "PerformerLastName": "Päffgen"
+                    }]
+                },
+                "examples": [
+                    [{
+                        "PerformerArtistName": "Terry Riley",
+                        "PerformerFirstName": "Terry",
+                        "PerformerLastName": "Riley"
+                    }],
+                    [{
+                        "PerformerArtistName": "The Velvet Underground",
+                        "PerformerFirstName": null,
+                        "PerformerLastName": null
+                    },
+                    {
+                        "PerformerArtistName": "Nico",
+                        "PerformerFirstName": "Christa",
+                        "PerformerLastName": "Päffgen"
+                    }]
+                ]
+            }
+        },
+        "examples": [{
+            "AlbumTitle": "A Rainbow in Curved Air",
+            "ReleaseYear": 1969,
+            "NumberOfSingles": 2,
+            "Genre": "Minimal",
+            "Style": "Minimal Ambient",
+            "ReleaseLabel": "Columbia Masterworks",
+            "Country": "United States of America",
+            "Type": "Studio Album",
+            "Songs": [{
+                "SongTitle": "A Rainbow in Curved Air",
+                "TrackNumber": 1,
+                "Duration": 1127
+            },
+            {
+                "SongTitle": "Poppy Nogood and the Phantom Band",
+                "TrackNumber": 2,
+                "Duration": 1300
+            }],
+            "Producers": [{
+                "ProducerArtistName": "David Behrman",
+                "ProducerFirstName": "David",
+                "ProducerLastName": "Behrman"
+            }],
+            "Performers": [{
+                "PerformerArtistName": "Terry Riley",
+                "PerformerFirstName": "Terry",
+                "PerformerLastName": "Riley"
+            }]
+        },
+        {
+            "AlbumTitle": "The Velvet Underground \u0026 Nico",
+            "ReleaseYear": 1967,
+            "NumberOfSingles": 2,
+            "Genre": "Rock",
+            "Style": "Experimental Rock",
+            "ReleaseLabel": "Verve Records",
+            "Country": "United States of America",
+            "Type": "Studio Album",
+            "Songs": [{
+                "SongTitle": "Sunday Morning",
+                "TrackNumber": 1,
+                "Duration": 173
+            },
+            {
+                "SongTitle": "I'm Waiting for the Man",
+                "TrackNumber": 2,
+                "Duration": 277
+            },
+            {
+                "SongTitle": "Femme Fatale",
+                "TrackNumber": 3,
+                "Duration": 155
+            },
+            {
+                "SongTitle": "Venus In Furs",
+                "TrackNumber": 4,
+                "Duration": 307
+            },
+            {
+                "SongTitle": "Run Run Run",
+                "TrackNumber": 5,
+                "Duration": 258
+            },
+            {
+                "SongTitle": "All Tomorrow's Parties",
+                "TrackNumber": 6,
+                "Duration": 355
+            },
+            {
+                "SongTitle": "Heroin",
+                "TrackNumber": 7,
+                "Duration": 425
+            },
+            {
+                "SongTitle": "There She Goes Again",
+                "TrackNumber": 8,
+                "Duration": 150
+            },
+            {
+                "SongTitle": "I'll Be Your Mirror",
+                "TrackNumber": 9,
+                "Duration": 121
+            },
+            {
+                "SongTitle": "The Black Angel's Death Song",
+                "TrackNumber": 10,
+                "Duration": 190
+            },
+            {
+                "SongTitle": "European Son",
+                "TrackNumber": 11,
+                "Duration": 460
+            }],
+            "Producers": [{
+                "ProducerArtistName": "The Velvet Underground",
+                "ProducerFirstName": null,
+                "ProducerLastName": null
+            },
+            {
+                "ProducerArtistName": "Andy Warhol",
+                "ProducerFirstName": "Andy",
+                "ProducerLastName": "Warhol"
+            }],
+            "Performers": [{
+                "PerformerArtistName": "The Velvet Underground",
+                "PerformerFirstName": null,
+                "PerformerLastName": null
+            },
+            {
+                "PerformerArtistName": "Nico",
+                "PerformerFirstName": "Christa",
+                "PerformerLastName": "Päffgen"
+            }]
+        }]
+    },
+    "examples": [
+        [{
+            "AlbumTitle": "A Rainbow in Curved Air",
+            "ReleaseYear": 1969,
+            "NumberOfSingles": 2,
+            "Genre": "Minimal",
+            "Style": "Minimal Ambient",
+            "ReleaseLabel": "Columbia Masterworks",
+            "Country": "United States of America",
+            "Type": "Studio Album",
+            "Songs": [{
+                "SongTitle": "A Rainbow in Curved Air",
+                "TrackNumber": 1,
+                "Duration": 1127
+            },
+            {
+                "SongTitle": "Poppy Nogood and the Phantom Band",
+                "TrackNumber": 2,
+                "Duration": 1300
+            }],
+            "Producers": [{
+                "ProducerArtistName": "David Behrman",
+                "ProducerFirstName": "David",
+                "ProducerLastName": "Behrman"
+            }],
+            "Performers": [{
+                "PerformerArtistName": "Terry Riley",
+                "PerformerFirstName": "Terry",
+                "PerformerLastName": "Riley"
+            }]
+        },
+        {
+            "AlbumTitle": "The Velvet Underground \u0026 Nico",
+            "ReleaseYear": 1967,
+            "NumberOfSingles": 2,
+            "Genre": "Rock",
+            "Style": "Experimental Rock",
+            "ReleaseLabel": "Verve Records",
+            "Country": "United States of America",
+            "Type": "Studio Album",
+            "Songs": [{
+                "SongTitle": "Sunday Morning",
+                "TrackNumber": 1,
+                "Duration": 173
+            },
+            {
+                "SongTitle": "I'm Waiting for the Man",
+                "TrackNumber": 2,
+                "Duration": 277
+            },
+            {
+                "SongTitle": "Femme Fatale",
+                "TrackNumber": 3,
+                "Duration": 155
+            },
+            {
+                "SongTitle": "Venus In Furs",
+                "TrackNumber": 4,
+                "Duration": 307
+            },
+            {
+                "SongTitle": "Run Run Run",
+                "TrackNumber": 5,
+                "Duration": 258
+            },
+            {
+                "SongTitle": "All Tomorrow's Parties",
+                "TrackNumber": 6,
+                "Duration": 355
+            },
+            {
+                "SongTitle": "Heroin",
+                "TrackNumber": 7,
+                "Duration": 425
+            },
+            {
+                "SongTitle": "There She Goes Again",
+                "TrackNumber": 8,
+                "Duration": 150
+            },
+            {
+                "SongTitle": "I'll Be Your Mirror",
+                "TrackNumber": 9,
+                "Duration": 121
+            },
+            {
+                "SongTitle": "The Black Angel's Death Song",
+                "TrackNumber": 10,
+                "Duration": 190
+            },
+            {
+                "SongTitle": "European Son",
+                "TrackNumber": 11,
+                "Duration": 460
+            }],
+            "Producers": [{
+                "ProducerArtistName": "The Velvet Underground",
+                "ProducerFirstName": null,
+                "ProducerLastName": null
+            },
+            {
+                "ProducerArtistName": "Andy Warhol",
+                "ProducerFirstName": "Andy",
+                "ProducerLastName": "Warhol"
+            }],
+            "Performers": [{
+                "PerformerArtistName": "The Velvet Underground",
+                "PerformerFirstName": null,
+                "PerformerLastName": null
+            },
+            {
+                "PerformerArtistName": "Nico",
+                "PerformerFirstName": "Christa",
+                "PerformerLastName": "Päffgen"
+            }]
+        }]
+    ]
+}
