@@ -3,15 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Music Albums Dataset</title>
-    <meta name="description" content="A dataset containing information about music albums and songs.">
+    <meta name="description" content="A comprehensive open dataset of music albums and songs, detailing album titles, artists, genres, and more, for educational and research purposes.">
+    <meta name="keywords" content="Music Albums, Songs Dataset, Music Metadata, Open Dataset, Music Information, Albums and Songs, PostgreSQL, CSV, JSON, MusicBrainz, Discogs, Wikidata">
     <meta name="author" content="Vito Vrbić">
+    <title>Music Albums Dataset</title>
     <link rel="stylesheet" href="./index_styles.css">
 </head>
 <body>
     <header>
         <h1>Music Albums and Songs Dataset</h1>
-        <p>This dataset contains factual information about music albums and songs, including album titles, artists, genres, and more.</p>
+        <p>This dataset offers factual information about music albums and songs, including titles, artists, genres, producers, and more. It serves as an educational resource developed for the <a href="https://www.fer.unizg.hr/en/course/opecom_b" target="_blank">Open Computing course</a> at the <a href="https://www.fer.unizg.hr/en" target="_blank">University of Zagreb Faculty of Electrical Engineering and Computing</a>.</p>
     </header>
     <nav>
         <h2>Download Data</h2>
@@ -21,15 +22,26 @@
         </ul>
     </nav>
     <main>
-        <h2>Overview</h2>
-        <p>The dataset includes a variety of music albums with details such as the release year, number of singles, genre, and more.</p>
-        <h2>View Data</h2>
-        <p><a href="datatable.html">Go to the Data Table</a> to filter and view the dataset interactively.</p>
+        <section>
+            <h2>Overview</h2>
+            <p>The dataset includes comprehensive details about 12 music albums and 149 songs. The information is sourced from <a href="https://www.musicbrainz.org" target="_blank">MusicBrainz</a>, <a href="https://www.discogs.com" target="_blank">Discogs</a>, and <a href="https://www.wikidata.org" target="_blank">Wikidata</a>, all under the CC0 license.</p>
+        </section>
+        <section>
+            <h2>Data Structure</h2>
+            <p>The dataset is organized into several related tables, detailing albums, songs, artists, genres, styles, and more.</p>
+                <p><strong>Albums:</strong> Information on album titles, release years, genres, styles, types, performers, producers, release labels, countries of relese, songs, number of singles.</p>
+                <p><strong>Songs:</strong> Each song's title, track number, and duration.</p>
+                <p><strong>People:</strong> Names of producers and performers.</p>
+        </section>
+        <section>
+            <h2>View Data</h2>
+            <p>Interact with the dataset through the <a href="datatable.html">Data Table</a>, which allows filtering and exploration of the dataset.</p>
+        </section>
     </main>
     <footer>
         <p>Dataset created by <a href="mailto:vito.vrbic@unizg.fer.hr">Vito Vrbić</a>.</p>
-        <p>Last updated: October 2024.</p>
-        <p><a href="./LICENSE">License</a></p>
+        <p>Last updated: November 2024.</p>
+        <p>This dataset is available under the <a href="./LICENSE" target="_blank">Creative Commons Zero (CC0) license</a>.</p>
     </footer>
 </body>
 </html>
