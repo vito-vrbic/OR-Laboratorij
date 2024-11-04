@@ -25,50 +25,42 @@
             "AlbumTitle": {
                 "type": "string",
                 "title": "Album Title",
-                "description": "The title of the album.",
-                "examples": ["A Rainbow in Curved Air", "The Velvet Underground & Nico"]
+                "description": "The title of the album."
             },
             "ReleaseYear": {
                 "type": "integer",
                 "title": "Release Year",
-                "description": "The year the album was released.",
-                "examples": [1969, 1967]
+                "description": "The year the album was released."
             },
             "NumberOfSingles": {
                 "type": "integer",
                 "title": "Number Of Singles",
-                "description": "The number of singles released from the album.",
-                "examples": [2]
+                "description": "The number of singles released from the album."
             },
             "Genre": {
                 "type": "string",
                 "title": "Genre",
-                "description": "The musical genre of the album.",
-                "examples": ["Minimal", "Rock"]
+                "description": "The musical genre of the album."
             },
             "Style": {
                 "type": "string",
                 "title": "Style",
-                "description": "The specific style or sub-genre of the album.",
-                "examples": ["Minimal Ambient", "Experimental Rock"]
+                "description": "The specific style or sub-genre of the album."
             },
             "ReleaseLabel": {
                 "type": "string",
                 "title": "Release Label",
-                "description": "The record label that released the album.",
-                "examples": ["Columbia Masterworks", "Verve Records"]
+                "description": "The record label that released the album."
             },
             "Country": {
                 "type": "string",
                 "title": "Country Of Release",
-                "description": "The country where the album was released.",
-                "examples": ["United States of America"]
+                "description": "The country where the album was released."
             },
             "Type": {
                 "type": "string",
                 "title": "Type",
-                "description": "The type of album, e.g., studio album, live album.",
-                "examples": ["Studio Album"]
+                "description": "The type of album, e.g., studio album, live album."
             },
             "Songs": {
                 "type": "array",
@@ -83,20 +75,17 @@
                         "SongTitle": {
                             "type": "string",
                             "title": "Song Title",
-                            "description": "The title of the song.",
-                            "examples": ["A Rainbow in Curved Air", "Sunday Morning"]
+                            "description": "The title of the song."
                         },
                         "TrackNumber": {
                             "type": "integer",
                             "title": "Track Number",
-                            "description": "The track number of the song on the album.",
-                            "examples": [1, 2]
+                            "description": "The track number of the song on the album."
                         },
                         "Duration": {
                             "type": "integer",
                             "title": "Duration",
-                            "description": "The duration of the song in seconds.",
-                            "examples": [1127, 173]
+                            "description": "The duration of the song in seconds."
                         }
                     }
                 }
@@ -114,20 +103,17 @@
                         "ProducerArtistName": {
                             "type": "string",
                             "title": "Producer's Artist Name",
-                            "description": "The artist name of the producer.",
-                            "examples": ["David Behrman", "The Velvet Underground"]
+                            "description": "The artist name of the producer."
                         },
                         "ProducerFirstName": {
                             "type": ["string", "null"],
                             "title": "Producer's First Name",
-                            "description": "The first name of the producer.",
-                            "examples": ["David", null]
+                            "description": "The first name of the producer."
                         },
                         "ProducerLastName": {
                             "type": ["string", "null"],
                             "title": "Producer's Last Name",
-                            "description": "The last name of the producer.",
-                            "examples": ["Behrman", null]
+                            "description": "The last name of the producer."
                         }
                     }
                 }
@@ -145,20 +131,17 @@
                         "PerformerArtistName": {
                             "type": "string",
                             "title": "Performer's Artist Name",
-                            "description": "The artist name of the performer.",
-                            "examples": ["Terry Riley", "The Velvet Underground"]
+                            "description": "The artist name of the performer."
                         },
                         "PerformerFirstName": {
                             "type": ["string", "null"],
                             "title": "Performer's First Name",
-                            "description": "The first name of the performer.",
-                            "examples": ["Terry", null]
+                            "description": "The first name of the performer."
                         },
                         "PerformerLastName": {
                             "type": ["string", "null"],
                             "title": "Performer's Last Name",
-                            "description": "The last name of the performer.",
-                            "examples": ["Riley", null]
+                            "description": "The last name of the performer."
                         }
                     }
                 }
