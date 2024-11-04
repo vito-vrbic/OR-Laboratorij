@@ -4,10 +4,10 @@
     "type": "array",
     "default": [],
     "title": "Albums Dataset Schema",
-    "description": "This schema represents a json array of album objects.",
+    "description": "This schema represents a JSON array of album objects.",
     "items": {
         "type": "object",
-        "title": "A Schema",
+        "title": "Album",
         "required": [
             "AlbumTitle",
             "ReleaseYear",
@@ -24,7 +24,7 @@
         "properties": {
             "AlbumTitle": {
                 "type": "string",
-                "title": "The AlbumTitle Schema",
+                "title": "Album Title",
                 "examples": [
                     "A Rainbow in Curved Air",
                     "The Velvet Underground \u0026 Nico"
@@ -32,7 +32,7 @@
             },
             "ReleaseYear": {
                 "type": "integer",
-                "title": "The ReleaseYear Schema",
+                "title": "Release Year",
                 "examples": [
                     1969,
                     1967
@@ -40,14 +40,14 @@
             },
             "NumberOfSingles": {
                 "type": "integer",
-                "title": "The NumberOfSingles Schema",
+                "title": "Number Of Singles",
                 "examples": [
                     2
                 ]
             },
             "Genre": {
                 "type": "string",
-                "title": "The Genre Schema",
+                "title": "Genre",
                 "examples": [
                     "Minimal",
                     "Rock"
@@ -55,7 +55,7 @@
             },
             "Style": {
                 "type": "string",
-                "title": "The Style Schema",
+                "title": "Style",
                 "examples": [
                     "Minimal Ambient",
                     "Experimental Rock"
@@ -63,7 +63,7 @@
             },
             "ReleaseLabel": {
                 "type": "string",
-                "title": "The ReleaseLabel Schema",
+                "title": "Release Label",
                 "examples": [
                     "Columbia Masterworks",
                     "Verve Records"
@@ -71,24 +71,24 @@
             },
             "Country": {
                 "type": "string",
-                "title": "The Country Schema",
+                "title": "Country Of Release",
                 "examples": [
                     "United States of America"
                 ]
             },
             "Type": {
                 "type": "string",
-                "title": "The Type Schema",
+                "title": "Type",
                 "examples": [
                     "Studio Album"
                 ]
             },
             "Songs": {
                 "type": "array",
-                "title": "The Songs Schema",
+                "title": "Songs",
                 "items": {
                     "type": "object",
-                    "title": "A Schema",
+                    "title": "Song",
                     "required": [
                         "SongTitle",
                         "TrackNumber",
@@ -97,7 +97,7 @@
                     "properties": {
                         "SongTitle": {
                             "type": "string",
-                            "title": "The SongTitle Schema",
+                            "title": "Song Title",
                             "examples": [
                                 "A Rainbow in Curved Air",
                                 "Poppy Nogood and the Phantom Band",
@@ -116,7 +116,7 @@
                         },
                         "TrackNumber": {
                             "type": "integer",
-                            "title": "The TrackNumber Schema",
+                            "title": "Track Number",
                             "examples": [
                                 1,
                                 2,
@@ -133,7 +133,7 @@
                         },
                         "Duration": {
                             "type": "integer",
-                            "title": "The Duration Schema",
+                            "title": "Duration",
                             "examples": [
                                 1127,
                                 1300,
@@ -287,10 +287,10 @@
             },
             "Producers": {
                 "type": "array",
-                "title": "The Producers Schema",
+                "title": "Producers",
                 "items": {
                     "type": "object",
-                    "title": "A Schema",
+                    "title": "Producer",
                     "required": [
                         "ProducerArtistName",
                         "ProducerFirstName",
@@ -299,7 +299,7 @@
                     "properties": {
                         "ProducerArtistName": {
                             "type": "string",
-                            "title": "The ProducerArtistName Schema",
+                            "title": "Producer's Artist Name",
                             "examples": [
                                 "David Behrman",
                                 "The Velvet Underground",
@@ -311,7 +311,7 @@
                                 "string",
                                 "null"
                             ],
-                            "title": "The ProducerFirstName Schema",
+                            "title": "Producer's First Name",
                             "examples": [
                                 "David",
                                 null,
@@ -323,7 +323,7 @@
                                 "string",
                                 "null"
                             ],
-                            "title": "The ProducerLastName Schema",
+                            "title": "Producer's Last Name",
                             "examples": [
                                 "Behrman",
                                 null,
@@ -367,10 +367,10 @@
             },
             "Performers": {
                 "type": "array",
-                "title": "The Performers Schema",
+                "title": "Performers",
                 "items": {
                     "type": "object",
-                    "title": "A Schema",
+                    "title": "Performer",
                     "required": [
                         "PerformerArtistName",
                         "PerformerFirstName",
@@ -379,7 +379,7 @@
                     "properties": {
                         "PerformerArtistName": {
                             "type": "string",
-                            "title": "The PerformerArtistName Schema",
+                            "title": "Performer's Artist Name",
                             "examples": [
                                 "Terry Riley",
                                 "The Velvet Underground",
@@ -391,7 +391,7 @@
                                 "string",
                                 "null"
                             ],
-                            "title": "The PerformerFirstName Schema",
+                            "title": "Performer's First Name",
                             "examples": [
                                 "Terry",
                                 null,
@@ -403,7 +403,7 @@
                                 "string",
                                 "null"
                             ],
-                            "title": "The PerformerLastName Schema",
+                            "title": "Performer's Last Name",
                             "examples": [
                                 "Riley",
                                 null,
