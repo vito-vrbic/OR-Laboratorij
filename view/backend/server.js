@@ -19,8 +19,17 @@ fs.readFile(datasetPath, 'utf8', (err, data) => {
         console.error('Error reading dataset:', err);
         return;
     }
-    albumsData = JSON.parse(data);
+    try {
+        albumsData = JSON.parse(data);
+    } catch (parseError) {
+        console.error('Error parsing JSON:', parseError);
+    }
 });
+
+// Helper function to safely convert to lower case if not null
+const safeToLower = (value) => {
+    return value && typeof value === 'string' ? value.toLowerCase() : '';
+};
 
 // Endpoint to get all albums or filter by attribute
 app.get('/api/albums', (req, res) => {
@@ -35,47 +44,51 @@ app.get('/api/albums', (req, res) => {
 
             // Check for each attribute when searching all
             if (attribute === 'All') {
-                found = album.AlbumTitle.toLowerCase().includes(search.toLowerCase()) ||
-                        album.ReleaseYear.toString() === search ||
-                        album.NumberOfSingles.toString().includes(search) ||
-                        album.Genre.toLowerCase().includes(search.toLowerCase()) ||
-                        album.Style.toLowerCase().includes(search.toLowerCase()) ||
-                        album.ReleaseLabel.toLowerCase().includes(search.toLowerCase()) ||
-                        album.Country.toLowerCase().includes(search.toLowerCase()) ||
-                        album.Type.toLowerCase().includes(search.toLowerCase()) ||
-                        album.Producers.some(producer => 
-                            producer.ProducerArtistName.toLowerCase().includes(search.toLowerCase()) ||
-                            producer.ProducerFirstName.toLowerCase().includes(search.toLowerCase()) ||
-                            producer.ProducerLastName.toLowerCase().includes(search.toLowerCase())) ||
-                        album.Performers.some(performer => 
-                            performer.PerformerArtistName.toLowerCase().includes(search.toLowerCase()) ||
-                            performer.PerformerFirstName.toLowerCase().includes(search.toLowerCase()) ||
-                            performer.PerformerLastName.toLowerCase().includes(search.toLowerCase())) ||
-                        album.Songs.some(song => 
-                            song.SongTitle.toLowerCase().includes(search.toLowerCase()) ||
-                            song.TrackNumber.toString() === search ||
-                            song.Duration.toString() === search);
+                found = safeToLower(album.AlbumTitle).includes(safeToLower(search)) ||
+                        safeToLower(album.ReleaseYear.toString()).includes(search) ||
+                        // Search for NumberOfSingles as a string
+                        safeToLower(album.NumberOfSingles.toString()).includes(search) ||
+                        safeToLower(album.Genre).includes(safeToLower(search)) ||
+                        safeToLower(album.Style).includes(safeToLower(search)) ||
+                        safeToLower(album.ReleaseLabel).includes(safeToLower(search)) ||
+                        safeToLower(album.Country).includes(safeToLower(search)) ||
+                        safeToLower(album.Type).includes(safeToLower(search)) ||
+                        (album.Producers && album.Producers.some(producer => 
+                            safeToLower(producer.ProducerArtistName).includes(safeToLower(search)) ||
+                            safeToLower(producer.ProducerFirstName).includes(safeToLower(search)) ||
+                            safeToLower(producer.ProducerLastName).includes(safeToLower(search)))) ||
+                        (album.Performers && album.Performers.some(performer => 
+                            safeToLower(performer.PerformerArtistName).includes(safeToLower(search)) ||
+                            safeToLower(performer.PerformerFirstName).includes(safeToLower(search)) ||
+                            safeToLower(performer.PerformerLastName).includes(safeToLower(search)))) ||
+                        (album.Songs && album.Songs.some(song => 
+                            safeToLower(song.SongTitle).includes(safeToLower(search)) ||
+                            safeToLower(song.TrackNumber.toString()) === search ||
+                            safeToLower(song.Duration.toString()) === search));
             } else if (attribute === 'SongTitle') {
-                found = album.Songs.some(song => song.SongTitle.toLowerCase() === search.toLowerCase());
+                found = album.Songs && album.Songs.some(song => safeToLower(song.SongTitle) === safeToLower(search));
             } else if (attribute === 'PerformerName') {
-                found = album.Performers.some(performer => 
-                    performer.PerformerArtistName.toLowerCase() === search.toLowerCase() ||
-                    performer.PerformerFirstName.toLowerCase() === search.toLowerCase() ||
-                    performer.PerformerLastName.toLowerCase() === search.toLowerCase());
+                found = album.Performers && album.Performers.some(performer => 
+                    safeToLower(performer.PerformerArtistName) === safeToLower(search) ||
+                    safeToLower(performer.PerformerFirstName) === safeToLower(search) ||
+                    safeToLower(performer.PerformerLastName) === safeToLower(search));
             } else if (attribute === 'ProducerName') {
-                found = album.Producers.some(producer => 
-                    producer.ProducerArtistName.toLowerCase() === search.toLowerCase() ||
-                    producer.ProducerFirstName.toLowerCase() === search.toLowerCase() ||
-                    producer.ProducerLastName.toLowerCase() === search.toLowerCase());
+                found = album.Producers && album.Producers.some(producer => 
+                    safeToLower(producer.ProducerArtistName) === safeToLower(search) ||
+                    safeToLower(producer.ProducerFirstName) === safeToLower(search) ||
+                    safeToLower(producer.ProducerLastName) === safeToLower(search));
             } else if (attribute === 'TrackNumber') {
-                found = album.Songs.some(song => song.TrackNumber.toString() === search);
+                found = album.Songs && album.Songs.some(song => safeToLower(song.TrackNumber.toString()) === search);
             } else if (attribute === 'Duration') {
-                found = album.Songs.some(song => song.Duration.toString() === search);
+                found = album.Songs && album.Songs.some(song => safeToLower(song.Duration.toString()) === search);
             } else if (attribute === 'ReleaseYear') {
-                found = album.ReleaseYear.toString() === search;
+                found = safeToLower(album.ReleaseYear.toString()) === search;
+            } else if (attribute === 'NumberOfSingles') {
+                // Filter directly by NumberOfSingles
+                found = safeToLower(album.NumberOfSingles.toString()) === search; 
             } else {
-                const valueToCheck = album[attribute] ? album[attribute].toString().toLowerCase() : '';
-                found = valueToCheck.includes(search.toLowerCase());
+                const valueToCheck = album[attribute] ? album[attribute].toString() : '';
+                found = safeToLower(valueToCheck).includes(safeToLower(search));
             }
 
             return found;

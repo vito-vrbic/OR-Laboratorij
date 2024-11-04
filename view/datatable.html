@@ -1,16 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Data Table - Music Albums</title>
-    <link rel="stylesheet" href="./frontend/datatable_styles.css"> <!-- Link to your custom CSS -->
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            let currentData = []; // Store the current data for download
+    <link rel="stylesheet" href="./frontend/datatable_styles.css">
 
-            // Function to load data
-            function loadData(searchValue = '', searchAttribute = 'AlbumTitle') {
+    <script>
+        // Waiting for DOM to be fully loaded before executing this script
+        document.addEventListener("DOMContentLoaded", function() {
+
+            // JSON data gotten from the backend
+            let currentData = [];
+
+            // Function to get data from backend
+            function loadData(searchValue = '', searchAttribute = 'All') {
                 const url = `http://localhost:3000/api/albums?search=${encodeURIComponent(searchValue)}&attribute=${encodeURIComponent(searchAttribute)}`;
 
                 fetch(url)
@@ -21,7 +26,7 @@
                         return response.json();
                     })
                     .then(data => {
-                        currentData = data; // Store the loaded data
+                        currentData = data;
                         populateTable(data);
                     })
                     .catch(error => {
@@ -110,60 +115,61 @@
             }
 
             function convertToCSV(jsonData) {
-    const csvRows = [];
-    // Define CSV Headers
-    const headers = [
-        "AlbumTitle", "ReleaseYear", "NumberOfSingles", "Genre", "Style", 
-        "ReleaseLabel", "Country", "Type", "SongTitle", "TrackNumber", 
-        "Duration", "ProducerArtistName", "ProducerFirstName", "ProducerLastName", 
-        "PerformerArtistName", "PerformerFirstName", "PerformerLastName"
-    ];
-    csvRows.push(headers.join(','));
+                const csvRows = [];
 
-    jsonData.forEach(album => {
-        (album.Songs || []).forEach(song => {
-            const producers = album.Producers.length > 0 ? album.Producers : [{ ProducerArtistName: '', ProducerFirstName: '', ProducerLastName: '' }];
-            const performers = album.Performers.length > 0 ? album.Performers : [{ PerformerArtistName: '', PerformerFirstName: '', PerformerLastName: '' }];
+                // Define CSV Headers
+                const headers = [
+                    "AlbumTitle", "ReleaseYear", "NumberOfSingles", "Genre", "Style", 
+                    "ReleaseLabel", "Country", "Type", "SongTitle", "TrackNumber", 
+                    "Duration", "ProducerArtistName", "ProducerFirstName", "ProducerLastName", 
+                    "PerformerArtistName", "PerformerFirstName", "PerformerLastName"
+                ];
+                csvRows.push(headers.join(','));
 
-            producers.forEach(producer => {
-                performers.forEach(performer => {
-                    const row = [
-                        album.AlbumTitle || '',
-                        album.ReleaseYear || '',
-                        album.NumberOfSingles || '0',
-                        album.Genre || '',
-                        album.Style || '',
-                        album.ReleaseLabel || '',
-                        album.Country || '',
-                        album.Type || '',
-                        escapeCsvValue(song.SongTitle || ''),
-                        song.TrackNumber || '',
-                        song.Duration || '',
-                        escapeCsvValue(producer.ProducerArtistName || ''),
-                        escapeCsvValue(producer.ProducerFirstName || ''),
-                        escapeCsvValue(producer.ProducerLastName || ''),
-                        escapeCsvValue(performer.PerformerArtistName || ''),
-                        escapeCsvValue(performer.PerformerFirstName || ''),
-                        escapeCsvValue(performer.PerformerLastName || '')
-                    ];
-                    csvRows.push(row.join(','));
+                jsonData.forEach(album => {
+                    (album.Songs || []).forEach(song => {
+                        const producers = album.Producers.length > 0 ? album.Producers : [{ ProducerArtistName: '', ProducerFirstName: '', ProducerLastName: '' }];
+                        const performers = album.Performers.length > 0 ? album.Performers : [{ PerformerArtistName: '', PerformerFirstName: '', PerformerLastName: '' }];
+
+                        producers.forEach(producer => {
+                            performers.forEach(performer => {
+                                const row = [
+                                    album.AlbumTitle || '',
+                                    album.ReleaseYear || '',
+                                    album.NumberOfSingles || '0',
+                                    album.Genre || '',
+                                    album.Style || '',
+                                    album.ReleaseLabel || '',
+                                    album.Country || '',
+                                    album.Type || '',
+                                    escapeCsvValue(song.SongTitle || ''),
+                                    song.TrackNumber || '',
+                                    song.Duration || '',
+                                    escapeCsvValue(producer.ProducerArtistName || ''),
+                                    escapeCsvValue(producer.ProducerFirstName || ''),
+                                    escapeCsvValue(producer.ProducerLastName || ''),
+                                    escapeCsvValue(performer.PerformerArtistName || ''),
+                                    escapeCsvValue(performer.PerformerFirstName || ''),
+                                    escapeCsvValue(performer.PerformerLastName || '')
+                                ];
+                                csvRows.push(row.join(','));
+                            });
+                        });
+                    });
                 });
-            });
-        });
-    });
 
-    return csvRows.join('\n');
-}
+                return csvRows.join('\n');
+            }
 
-function escapeCsvValue(value) {
-    if (typeof value === 'string' && (value.includes(',') || value.includes('"'))) {
-        // Escape existing double quotes
-        value = value.replace(/"/g, '""');
-        // Wrap the field in double quotes
-        return `"${value}"`;
-    }
-    return value;
-}
+            function escapeCsvValue(value) {
+                if (typeof value === 'string' && (value.includes(',') || value.includes('"'))) {
+                    // Escape existing double quotes
+                    value = value.replace(/"/g, '""');
+                    // Wrap the field in double quotes
+                    return `"${value}"`;
+                }
+                return value;
+            }
 
             // Function to download simplified JSON data
             function downloadJSON(data) {
@@ -235,6 +241,7 @@ function escapeCsvValue(value) {
                 <option value="All">All</option>
                 <option value="AlbumTitle">Album Title</option>
                 <option value="ReleaseYear">Release Year</option>
+                <option value="NumberOfSingles">Number of Singles</option>
                 <option value="Genre">Genre</option>
                 <option value="Style">Style</option>
                 <option value="ReleaseLabel">Release Label</option>
@@ -251,7 +258,6 @@ function escapeCsvValue(value) {
             <button type="button" id="resetFilter">Reset</button>
         </form>
 
-        <!-- Download Buttons -->
         <div>
             <button id="downloadJSON">Download JSON</button>
             <button id="downloadCSV">Download CSV</button>
@@ -273,7 +279,7 @@ function escapeCsvValue(value) {
                 </tr>
             </thead>
             <tbody>
-                <!-- Data will be populated by Fetch API -->
+
             </tbody>
         </table>
     </main>
