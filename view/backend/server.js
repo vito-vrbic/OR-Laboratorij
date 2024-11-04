@@ -90,33 +90,47 @@ app.get('/api/albums', async (req, res) => {
         const safeSearch = search.toLowerCase();
         
         if (attribute === 'All') {
+            // Add conditions for album attributes
             conditions.push(`LOWER(a.Album_Title) LIKE '%${safeSearch}%'`);
-            conditions.push(`LOWER(a.Release_Year::text) LIKE '%${safeSearch}%'`);
-            conditions.push(`LOWER(a.Number_of_Singles::text) LIKE '%${safeSearch}%'`);
+            conditions.push(`LOWER(a.Release_Year::text) LIKE '${safeSearch}'`);  // Exact match for Release Year
+            conditions.push(`LOWER(a.Number_of_Singles::text) LIKE '${safeSearch}'`);  // Exact match for Number of Singles
             conditions.push(`LOWER(a.Genre_Name) LIKE '%${safeSearch}%'`);
             conditions.push(`LOWER(a.Style_Name) LIKE '%${safeSearch}%'`);
             conditions.push(`LOWER(a.RLabel_Name) LIKE '%${safeSearch}%'`);
             conditions.push(`LOWER(a.Country_Name) LIKE '%${safeSearch}%'`);
             conditions.push(`LOWER(a.Type_Name) LIKE '%${safeSearch}%'`);
-            
+        
             // Include Songs, Producers, and Performers
             conditions.push(`EXISTS (SELECT 1 FROM Song s WHERE s.Album_ID = a.Album_ID AND LOWER(s.Song_Title) LIKE '%${safeSearch}%')`);
+            conditions.push(`EXISTS (SELECT 1 FROM Song s WHERE s.Album_ID = a.Album_ID AND LOWER(s.Duration::text) LIKE '${safeSearch}')`); // Exact match for song duration
             conditions.push(`EXISTS (SELECT 1 FROM produced_by pb JOIN Person p ON p.Artist_Name = pb.Artist_Name WHERE pb.Album_ID = a.Album_ID AND (LOWER(p.Artist_Name) LIKE '%${safeSearch}%' OR LOWER(p.First_Name) LIKE '%${safeSearch}%' OR LOWER(p.Last_Name) LIKE '%${safeSearch}%'))`);            
+            conditions.push(`EXISTS (SELECT 1 FROM performed_by pb JOIN Person p ON p.Artist_Name = pb.Artist_Name WHERE pb.Album_ID = a.Album_ID AND (LOWER(p.Artist_Name) LIKE '%${safeSearch}%' OR LOWER(p.First_Name) LIKE '%${safeSearch}%' OR LOWER(p.Last_Name) LIKE '%${safeSearch}%'))`);            
+        } else if (attribute === 'AlbumTitle') {
+            conditions.push(`LOWER(a.Album_Title) LIKE '%${safeSearch}%'`);
+        } else if (attribute === 'ReleaseYear') {
+            conditions.push(`LOWER(a.Release_Year::text) LIKE '${safeSearch}'`); // Exact match
+        } else if (attribute === 'NumberOfSingles') {
+            conditions.push(`LOWER(a.Number_of_Singles::text) LIKE '${safeSearch}'`); // Exact match
+        } else if (attribute === 'Genre') {
+            conditions.push(`LOWER(a.Genre_Name) LIKE '%${safeSearch}%'`);
+        } else if (attribute === 'Style') {
+            conditions.push(`LOWER(a.Style_Name) LIKE '%${safeSearch}%'`);
+        } else if (attribute === 'ReleaseLabel') {
+            conditions.push(`LOWER(a.RLabel_Name) LIKE '%${safeSearch}%'`);
+        } else if (attribute === 'Country') {
+            conditions.push(`LOWER(a.Country_Name) LIKE '%${safeSearch}%'`);
+        } else if (attribute === 'Type') {
+            conditions.push(`LOWER(a.Type_Name) LIKE '%${safeSearch}%'`);
+        } else if (attribute === 'ProducerName') {
+            conditions.push(`EXISTS (SELECT 1 FROM produced_by pb JOIN Person p ON p.Artist_Name = pb.Artist_Name WHERE pb.Album_ID = a.Album_ID AND (LOWER(p.Artist_Name) LIKE '%${safeSearch}%' OR LOWER(p.First_Name) LIKE '%${safeSearch}%' OR LOWER(p.Last_Name) LIKE '%${safeSearch}%'))`);            
+        } else if (attribute === 'PerformerName') {
             conditions.push(`EXISTS (SELECT 1 FROM performed_by pb JOIN Person p ON p.Artist_Name = pb.Artist_Name WHERE pb.Album_ID = a.Album_ID AND (LOWER(p.Artist_Name) LIKE '%${safeSearch}%' OR LOWER(p.First_Name) LIKE '%${safeSearch}%' OR LOWER(p.Last_Name) LIKE '%${safeSearch}%'))`);            
         } else if (attribute === 'SongTitle') {
             conditions.push(`EXISTS (SELECT 1 FROM Song s WHERE s.Album_ID = a.Album_ID AND LOWER(s.Song_Title) LIKE '%${safeSearch}%')`);
-        } else if (attribute === 'PerformerName') {
-            conditions.push(`EXISTS (SELECT 1 FROM performed_by pb JOIN Person p ON p.Artist_Name = pb.Artist_Name WHERE pb.Album_ID = a.Album_ID AND (LOWER(p.Artist_Name) LIKE '%${safeSearch}%' OR LOWER(p.First_Name) LIKE '%${safeSearch}%' OR LOWER(p.Last_Name) LIKE '%${safeSearch}%'))`);            
-        } else if (attribute === 'ProducerName') {
-            conditions.push(`EXISTS (SELECT 1 FROM produced_by pb JOIN Person p ON p.Artist_Name = pb.Artist_Name WHERE pb.Album_ID = a.Album_ID AND (LOWER(p.Artist_Name) LIKE '%${safeSearch}%' OR LOWER(p.First_Name) LIKE '%${safeSearch}%' OR LOWER(p.Last_Name) LIKE '%${safeSearch}%'))`);            
         } else if (attribute === 'TrackNumber') {
-            conditions.push(`EXISTS (SELECT 1 FROM Song s WHERE s.Album_ID = a.Album_ID AND LOWER(s.Track_Number::text) LIKE '%${safeSearch}%')`);
+            conditions.push(`EXISTS (SELECT 1 FROM Song s WHERE s.Album_ID = a.Album_ID AND LOWER(s.Track_Number::text) LIKE '${safeSearch}')`); // Exact match
         } else if (attribute === 'Duration') {
-            conditions.push(`EXISTS (SELECT 1 FROM Song s WHERE s.Album_ID = a.Album_ID AND LOWER(s.Duration::text) LIKE '%${safeSearch}%')`);
-        } else if (attribute === 'ReleaseYear') {
-            conditions.push(`LOWER(a.Release_Year::text) LIKE '%${safeSearch}%'`);
-        } else if (attribute === 'NumberOfSingles') {
-            conditions.push(`LOWER(a.Number_of_Singles::text) LIKE '%${safeSearch}%'`);
+            conditions.push(`EXISTS (SELECT 1 FROM Song s WHERE s.Album_ID = a.Album_ID AND LOWER(s.Duration::text) LIKE '${safeSearch}')`); // Exact match
         } else {
             conditions.push(`LOWER(a.${attribute}) LIKE '%${safeSearch}%'`);
         }
