@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Table - Music Albums</title>
+    <link rel="stylesheet" href="./frontend/datatable_styles.css"> <!-- Link to your custom CSS -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            let currentData = []; // Store the current data for download
+
+            // Function to load data
+            function loadData(searchValue = '', searchAttribute = 'AlbumTitle') {
+                const url = `http://localhost:3000/api/albums?search=${encodeURIComponent(searchValue)}&attribute=${encodeURIComponent(searchAttribute)}`;
+
+                fetch(url)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        currentData = data; // Store the loaded data
+                        populateTable(data);
+                    })
+                    .catch(error => {
+                        alert('Failed to fetch data: ' + error.message);
+                    });
+            }
+
+            // Populate table with data
+            function populateTable(data) {
+                const tbody = document.querySelector('#albumsTable tbody');
+                tbody.innerHTML = ''; // Clear existing data
+
+                data.forEach(album => {
+                    // Create a row for the album
+                    const albumRow = document.createElement('tr');
+                    albumRow.classList.add('album-row');
+                    albumRow.innerHTML = `
+                        <td>${album.AlbumTitle}</td>
+                        <td>${album.ReleaseYear}</td>
+                        <td>${album.NumberOfSingles}</td>
+                        <td>${album.Genre}</td>
+                        <td>${album.Style}</td>
+                        <td>${album.ReleaseLabel}</td>
+                        <td>${album.Country}</td>
+                        <td>${album.Type}</td>
+                        <td>${album.Producers.map(p => {
+                            const names = [];
+                            if (p.ProducerArtistName) names.push(p.ProducerArtistName);
+                            if (p.ProducerFirstName && p.ProducerLastName) {
+                                names.push(`(${p.ProducerFirstName} ${p.ProducerLastName})`);
+                            } else if (p.ProducerFirstName) {
+                                names.push(p.ProducerFirstName);
+                            } else if (p.ProducerLastName) {
+                                names.push(p.ProducerLastName);
+                            }
+                            return names.length > 0 ? names.join(' ') : 'Unknown Producer';
+                        }).join(', ')}</td>
+                        <td>${album.Performers.map(p => {
+                            const names = [];
+                            if (p.PerformerArtistName) names.push(p.PerformerArtistName);
+                            if (p.PerformerFirstName && p.PerformerLastName) {
+                                names.push(`(${p.PerformerFirstName} ${p.PerformerLastName})`);
+                            } else if (p.PerformerFirstName) {
+                                names.push(p.PerformerFirstName);
+                            } else if (p.PerformerLastName) {
+                                names.push(p.PerformerLastName);
+                            }
+                            return names.length > 0 ? names.join(' ') : 'Unknown Performer';
+                        }).join(', ')}</td>
+                    `;
+                    tbody.appendChild(albumRow);
+
+                    // Create a row for the songs (collapsed by default)
+                    const songsRow = document.createElement('tr');
+                    songsRow.classList.add('songs');
+                    songsRow.style.display = 'none';
+                    songsRow.innerHTML = `
+                        <td colspan="10">
+                            <table style="width: 100%;">
+                                <thead>
+                                    <tr>
+                                        <th>Track Number</th>
+                                        <th>Song Title</th>
+                                        <th>Duration (s)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    ${album.Songs.map(song => `
+                                        <tr>
+                                            <td>${song.TrackNumber}</td>
+                                            <td>${song.SongTitle}</td>
+                                            <td>${song.Duration}</td>
+                                        </tr>
+                                    `).join('')}
+                                </tbody>
+                            </table>
+                        </td>
+                    `;
+                    tbody.appendChild(songsRow);
+                    
+                    // Add click event to toggle song visibility
+                    albumRow.addEventListener('click', function() {
+                        songsRow.style.display = songsRow.style.display === 'none' ? '' : 'none'; // Toggle visibility of the song row
+                    });
+                });
+            }
+
+            function convertToCSV(jsonData) {
+    const csvRows = [];
+    // Define CSV Headers
+    const headers = [
+        "AlbumTitle", "ReleaseYear", "NumberOfSingles", "Genre", "Style", 
+        "ReleaseLabel", "Country", "Type", "SongTitle", "TrackNumber", 
+        "Duration", "ProducerArtistName", "ProducerFirstName", "ProducerLastName", 
+        "PerformerArtistName", "PerformerFirstName", "PerformerLastName"
+    ];
+    csvRows.push(headers.join(','));
+
+    jsonData.forEach(album => {
+        (album.Songs || []).forEach(song => {
+            const producers = album.Producers.length > 0 ? album.Producers : [{ ProducerArtistName: '', ProducerFirstName: '', ProducerLastName: '' }];
+            const performers = album.Performers.length > 0 ? album.Performers : [{ PerformerArtistName: '', PerformerFirstName: '', PerformerLastName: '' }];
+
+            producers.forEach(producer => {
+                performers.forEach(performer => {
+                    const row = [
+                        album.AlbumTitle || '',
+                        album.ReleaseYear || '',
+                        album.NumberOfSingles || '0',
+                        album.Genre || '',
+                        album.Style || '',
+                        album.ReleaseLabel || '',
+                        album.Country || '',
+                        album.Type || '',
+                        escapeCsvValue(song.SongTitle || ''),
+                        song.TrackNumber || '',
+                        song.Duration || '',
+                        escapeCsvValue(producer.ProducerArtistName || ''),
+                        escapeCsvValue(producer.ProducerFirstName || ''),
+                        escapeCsvValue(producer.ProducerLastName || ''),
+                        escapeCsvValue(performer.PerformerArtistName || ''),
+                        escapeCsvValue(performer.PerformerFirstName || ''),
+                        escapeCsvValue(performer.PerformerLastName || '')
+                    ];
+                    csvRows.push(row.join(','));
+                });
+            });
+        });
+    });
+
+    return csvRows.join('\n');
+}
+
+function escapeCsvValue(value) {
+    if (typeof value === 'string' && (value.includes(',') || value.includes('"'))) {
+        // Escape existing double quotes
+        value = value.replace(/"/g, '""');
+        // Wrap the field in double quotes
+        return `"${value}"`;
+    }
+    return value;
+}
+
+            // Function to download simplified JSON data
+            function downloadJSON(data) {
+                const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'albums.json';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+            }
+
+            // Function to download CSV
+            function downloadCSV() {
+                const csv = convertToCSV(currentData);
+                const blob = new Blob([csv], { type: 'text/csv' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'albums.csv';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+            }
+
+            // Filter functionality
+            document.querySelector('#filterForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                const searchValue = document.querySelector('#searchInput').value;
+                const searchAttribute = document.querySelector('#attributeSelect').value;
+                loadData(searchValue, searchAttribute);
+            });
+
+            // Reset filter
+            document.querySelector('#resetFilter').addEventListener('click', function() {
+                document.querySelector('#searchInput').value = '';
+                document.querySelector('#attributeSelect').value = 'AlbumTitle';
+                loadData(); // Load all data
+            });
+
+            // Event listeners for download buttons
+            document.querySelector('#downloadJSON').addEventListener('click', function() {
+                downloadJSON(currentData);
+            });
+            document.querySelector('#downloadCSV').addEventListener('click', function() {
+                downloadCSV();
+            });
+
+            // Initial load of data
+            loadData();
+        });
+    </script>
+</head>
+<body>
+    <header>
+        <h1>Music Albums Data Table</h1>
+        <p>Use the form below to filter the dataset.</p>
+    </header>
+    <main>
+        <form id="filterForm">
+            <label for="searchInput">Search:</label>
+            <input type="text" id="searchInput" placeholder="Enter search term" />
+            
+            <label for="attributeSelect">Filter by:</label>
+            <select id="attributeSelect">
+                <option value="All">All</option>
+                <option value="AlbumTitle">Album Title</option>
+                <option value="ReleaseYear">Release Year</option>
+                <option value="Genre">Genre</option>
+                <option value="Style">Style</option>
+                <option value="ReleaseLabel">Release Label</option>
+                <option value="Country">Country</option>
+                <option value="Type">Type</option>
+                <option value="ProducerName">Producer Name</option>
+                <option value="PerformerName">Performer Name</option>
+                <option value="SongTitle">Song Title</option>
+                <option value="TrackNumber">Track Number</option>
+                <option value="Duration">Duration</option>
+            </select>
+            
+            <button type="submit">Filter</button>
+            <button type="button" id="resetFilter">Reset</button>
+        </form>
+
+        <!-- Download Buttons -->
+        <div>
+            <button id="downloadJSON">Download JSON</button>
+            <button id="downloadCSV">Download CSV</button>
+        </div>
+        
+        <table id="albumsTable">
+            <thead>
+                <tr>
+                    <th>Album Title</th>
+                    <th>Release Year</th>
+                    <th>Number of Singles</th>
+                    <th>Genre</th>
+                    <th>Style</th>
+                    <th>Release Label</th>
+                    <th>Country</th>
+                    <th>Type</th>
+                    <th>Producers</th>
+                    <th>Performers</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Data will be populated by Fetch API -->
+            </tbody>
+        </table>
+    </main>
+    <footer>
+        <p>Dataset created by <a href="mailto:vito.vrbic@unizg.fer.hr">Vito Vrbić</a>.</p>
+        <p><a href="./index.html">Back to Home</a></p>
+    </footer>
+</body>
+</html>

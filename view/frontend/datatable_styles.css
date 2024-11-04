@@ -1,0 +1,82 @@
+/* Basic styling for the body */
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    margin: 20px;
+    background-color: #f8f8f8; /* Match index background */
+}
+
+/* Header styling */
+header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Table styling */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: #ffffff; /* White background for table */
+    border-radius: 5px; /* Rounded corners for table */
+    overflow: hidden; /* Ensures rounded corners apply */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 12px; /* Increased padding for better spacing */
+    text-align: left;
+}
+
+th {
+    background-color: #4CAF50; /* Green background for table header */
+    color: white; /* White text in header */
+}
+
+/* Form styling */
+form {
+    margin-bottom: 20px;
+    padding: 20px; /* Added padding for form */
+    background-color: #ffffff; /* White background for form */
+    border: 1px solid #ddd; /* Border for form */
+    border-radius: 5px; /* Rounded corners for form */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+}
+
+/* Button styling */
+button {
+    padding: 8px 15px; /* Increased padding for buttons */
+    margin-left: 5px;
+    cursor: pointer;
+    background-color: #4CAF50; /* Green background for buttons */
+    color: white; /* White text for buttons */
+    border: none; /* Remove border */
+    border-radius: 5px; /* Rounded corners for buttons */
+    transition: background-color 0.3s; /* Smooth background color transition */
+}
+
+button:hover {
+    background-color: #45a049; /* Darker green on hover */
+}
+
+/* Footer styling */
+footer {
+    text-align: center;
+    margin-top: 20px;
+}
+
+/* Responsive design for smaller screens */
+@media (max-width: 600px) {
+    body {
+        margin: 10px; /* Reduced margin for smaller screens */
+    }
+
+    th, td {
+        padding: 10px; /* Reduced padding for smaller screens */
+    }
+
+    button {
+        padding: 5px 10px; /* Adjust button padding for smaller screens */
+    }
+}
