@@ -2,6 +2,7 @@
 const express = require('express');
 const cors = require('cors');
 const { Client } = require('pg');
+const path = require('path');
 
 // Initialize the Express application
 const app = express();
@@ -157,6 +158,26 @@ app.get('/api/albums', async (req, res) => {
         console.error('Error fetching albums:', error);
         res.status(500).send('Internal Server Error');
     }
+});
+
+app.get('/data/albums.csv', async (req, res) => {
+    const filePath = path.join(__dirname, "../../data/albums.csv");
+    res.download(filePath, 'albums.csv', (err) => {
+        if (err) {
+            console.error('Error downloading the file:', err);
+            res.status(500).send('Error downloading the file.');
+        }
+    });
+});
+
+app.get('/data/albums.json', async (req, res) => {
+    const filePath = path.join(__dirname, '../../data/albums.json');
+    res.download(filePath, 'albums.json', (err) => {
+        if (err) {
+            console.error('Error downloading the file:', err);
+            res.status(500).send('Error downloading the file.');
+        }
+    });
 });
 
 // Start the server
