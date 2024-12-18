@@ -1,3 +1,4 @@
+/* Imports. */
 const express = require('express');
 const db = require('../db');
 const wrap_response = require('../wrapper');
@@ -29,7 +30,7 @@ router.get('/albums', async (req, res) => {
         const albumsResult = await db.query(albumsQuery);
 
         if (albumsResult.rows.length === 0) {
-            return res.json(wrap_response('success', 'No albums found', []));
+            return res.json(wrap_response('success', 'No albums found in the database.', []));
         }
 
         const albumIds = albumsResult.rows.map(album => album.album_id);
@@ -109,9 +110,9 @@ router.get('/albums', async (req, res) => {
             performers: performersMap[album.album_id] || []
         }));
 
-        res.json(wrap_response('success', 'Albums fetched successfully', detailedAlbums));
+        res.json(wrap_response('success', 'Albums fetched successfully.', detailedAlbums));
     } catch (err) {
-        res.status(500).json(wrap_response('error', 'Failed to fetch albums', { error: err.message }));
+        res.status(500).json(wrap_response('error', 'Failed to fetch albums.', []));
     }
 });
 
@@ -143,7 +144,7 @@ router.get('/albums/:id', async (req, res) => {
         const albumResult = await db.query(albumQuery, [albumId]);
 
         if (albumResult.rows.length === 0) {
-            return res.status(404).json(wrap_response('error', 'Album not found', null));
+            return res.status(404).json(wrap_response('error', 'Album not found.', null));
         }
 
         const songsQuery = `
@@ -189,9 +190,36 @@ router.get('/albums/:id', async (req, res) => {
             performers: performersResult.rows
         };
 
-        res.json(wrap_response('success', 'Album fetched successfully', album));
+        res.json(wrap_response('success', 'Album fetched successfully.', album));
     } catch (err) {
-        res.status(500).json(wrap_response('error', 'Failed to fetch album', { error: err.message }));
+        res.status(500).json(wrap_response('error', 'Failed to fetch album.', []));
+    }
+});
+
+/* GET request for all songs from an album with a certain id {:id}. */
+router.get('/albums/:id/songs', async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        const query = `
+            SELECT 
+                song_title, 
+                track_number, 
+                duration
+            FROM song
+            WHERE album_id = $1
+            ORDER BY track_number;
+        `;
+
+        const result = await db.query(query, [id]);
+
+        if (result.rows.length === 0) {
+            return res.status(404).json(wrap_response('error', 'No songs found for the specified album.', null));
+        }
+
+        res.json(wrap_response('success', 'Songs fetched successfully.', result.rows));
+    } catch (err) {
+        res.status(500).json(wrap_response('error', 'Failed to fetch songs.', []));
     }
 });
 
@@ -212,12 +240,12 @@ router.get('/albums/:id/songs/:num', async (req, res) => {
         const result = await db.query(query, [id, num]);
 
         if (result.rows.length === 0) {
-            return res.status(404).json(wrap_response('error', 'Song not found in the specified album', null));
+            return res.status(404).json(wrap_response('error', 'Song not found in the specified album.', null));
         }
 
-        res.json(wrap_response('success', 'Song fetched successfully', result.rows[0]));
+        res.json(wrap_response('success', 'Song fetched successfully.', result.rows[0]));
     } catch (err) {
-        res.status(500).json(wrap_response('error', 'Failed to fetch song', { error: err.message }));
+        res.status(500).json(wrap_response('error', 'Failed to fetch song.', []));
     }
 });
 
@@ -239,12 +267,12 @@ router.get('/albums/:id/producers', async (req, res) => {
         const result = await db.query(query, [id]);
 
         if (result.rows.length === 0) {
-            return res.status(404).json(wrap_response('error', 'No producers found for the specified album', null));
+            return res.status(404).json(wrap_response('error', 'No producers found for the specified album.', null));
         }
 
-        res.json(wrap_response('success', 'Producers fetched successfully', result.rows));
+        res.json(wrap_response('success', 'Producers fetched successfully.', result.rows));
     } catch (err) {
-        res.status(500).json(wrap_response('error', 'Failed to fetch producers', { error: err.message }));
+        res.status(500).json(wrap_response('error', 'Failed to fetch producers.', []));
     }
 });
 
@@ -266,13 +294,14 @@ router.get('/albums/:id/performers', async (req, res) => {
         const result = await db.query(query, [id]);
 
         if (result.rows.length === 0) {
-            return res.status(404).json(wrap_response('error', 'No performers found for the specified album', null));
+            return res.status(404).json(wrap_response('error', 'No performers found for the specified album.', null));
         }
 
-        res.json(wrap_response('success', 'Performers fetched successfully', result.rows));
+        res.json(wrap_response('success', 'Performers fetched successfully.', result.rows));
     } catch (err) {
-        res.status(500).json(wrap_response('error', 'Failed to fetch performers', { error: err.message }));
+        res.status(500).json(wrap_response('error', 'Failed to fetch performers.', []));
     }
 });
 
+/* Export. */
 module.exports = router;
