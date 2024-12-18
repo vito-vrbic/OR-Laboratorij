@@ -142,11 +142,11 @@ PostgreSQL database, pgAdmin 4 development platform, and functions for exporting
 
 ### Dataset Version
 
-2.0
+3.0
  
 ### Last updated:
 
-November, 2024.
+December, 2024.
 
 ### Author
 
