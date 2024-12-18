@@ -15,7 +15,7 @@ async function check_and_insert_artist(artistName) {
         SELECT artist_name FROM person WHERE artist_name = $1;
     `;
     const artistCheckResult = await db.query(artistCheckQuery, [artistName]);
-    
+
     // If the artist doesn't exist, insert them
     if (artistCheckResult.rows.length === 0) {
         const [firstName, lastName] = artistName.split(' ');
@@ -28,7 +28,6 @@ async function check_and_insert_artist(artistName) {
 }
 
 /* PUT request for updating an existing album along with related songs, producers, and performers. */
-/* PUT request for updating an existing album's details (excluding performers, producers, and songs) */
 router.put('/albums/:id', async (req, res) => {
     const id = req.params.id; // Get the album id from the URL parameter
     const {
@@ -39,7 +38,10 @@ router.put('/albums/:id', async (req, res) => {
         style_name, 
         rlabel_name, 
         country_name, 
-        type_name
+        type_name,
+        songs,         // List of songs to update/insert
+        performers,    // List of performers to update/insert
+        producers      // List of producers to update/insert
     } = req.body;
 
     // Validate input data
@@ -127,10 +129,78 @@ router.put('/albums/:id', async (req, res) => {
             id
         ]);
 
-        res.status(200).json(wrap_response('success', 'Album updated successfully.', { id }));
+        // DELETE songs that are not in the request
+        if (songs && songs.length > 0) {
+            const songTitles = songs.map(song => song.song_title);
+            await db.query(`
+                DELETE FROM song WHERE album_id = $1 AND song_title NOT IN ($2);
+            `, [id, songTitles]);
+
+            // Insert or update songs in the album
+            for (const song of songs) {
+                const songCheckQuery = `SELECT * FROM song WHERE album_id = $1 AND song_title = $2;`;
+                const songCheckResult = await db.query(songCheckQuery, [id, song.song_title]);
+
+                if (songCheckResult.rows.length === 0) {
+                    const songInsertQuery = `
+                        INSERT INTO song (album_id, song_title, track_number, duration)
+                        VALUES ($1, $2, $3, $4);
+                    `;
+                    await db.query(songInsertQuery, [id, song.song_title, song.track_number, convert_duration_to_seconds(song.duration)]);
+                }
+            }
+        }
+
+        // DELETE performers that are not in the request
+        if (performers && performers.length > 0) {
+            const performerNames = performers.map(p => p.artist_name); // Fix: extract artist_name from the objects
+            await db.query(`
+                DELETE FROM performed_by WHERE album_id = $1 AND artist_name NOT IN ($2);
+            `, [id, performerNames]);
+
+            // Optionally, insert new performers
+            for (const performer of performers) {
+                await check_and_insert_artist(performer.artist_name); // Fix: pass artist_name, not object
+                const performerCheckQuery = `SELECT * FROM performed_by WHERE album_id = $1 AND artist_name = $2;`;
+                const performerCheckResult = await db.query(performerCheckQuery, [id, performer.artist_name]);
+
+                if (performerCheckResult.rows.length === 0) {
+                    const performerInsertQuery = `
+                        INSERT INTO performed_by (album_id, artist_name)
+                        VALUES ($1, $2);
+                    `;
+                    await db.query(performerInsertQuery, [id, performer.artist_name]);
+                }
+            }
+        }
+
+        // DELETE producers that are not in the request
+        if (producers && producers.length > 0) {
+            const producerNames = producers.map(p => p.artist_name); // Fix: extract artist_name from the objects
+            await db.query(`
+                DELETE FROM produced_by WHERE album_id = $1 AND artist_name NOT IN ($2);
+            `, [id, producerNames]);
+
+            // Optionally, insert new producers
+            for (const producer of producers) {
+                await check_and_insert_artist(producer.artist_name); // Fix: pass artist_name, not object
+                const producerCheckQuery = `SELECT * FROM produced_by WHERE album_id = $1 AND artist_name = $2;`;
+                const producerCheckResult = await db.query(producerCheckQuery, [id, producer.artist_name]);
+
+                if (producerCheckResult.rows.length === 0) {
+                    const producerInsertQuery = `
+                        INSERT INTO produced_by (album_id, artist_name)
+                        VALUES ($1, $2);
+                    `;
+                    await db.query(producerInsertQuery, [id, producer.artist_name]);
+                }
+            }
+        }
+
+        res.status(200).json(wrap_response('success', 'Album and related data updated successfully.', { id }));
     } catch (err) {
-        console.error('Error updating album details:', err);
-        res.status(500).json(wrap_response('error', 'Error updating album details.', []));
+        console.error('Error updating album and related data:', err);
+        res.status(500).json(wrap_response('error', 'Error updating album and related data.'));
     }
 });
 

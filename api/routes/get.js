@@ -2,6 +2,7 @@
 const express = require('express');
 const db = require('../db');
 const wrap_response = require('../wrapper');
+const path = require('path');  // Add this line to import the path module
 
 const router = express.Router();
 
@@ -301,6 +302,12 @@ router.get('/albums/:id/performers', async (req, res) => {
     } catch (err) {
         res.status(500).json(wrap_response('error', 'Failed to fetch performers.', []));
     }
+});
+
+/* GET request for openapi.json file. */
+router.get('/openapi.json', (req, res) => {
+    // Send the OpenAPI JSON file
+    res.sendFile(path.join(__dirname, '../../openapi.json'));  // Assuming the openapi.json file is located in the root directory of the project
 });
 
 /* Export. */

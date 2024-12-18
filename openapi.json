@@ -1,0 +1,632 @@
+{
+    "openapi": "3.0.3",
+    "info": {
+      "title": "Music Albums and Songs API",
+      "version": "1.0.0",
+      "description": "API for managing the Music Albums and Songs dataset.",
+      "contact": {
+        "name": "Vito Vrbić",
+        "email": "vito.vrbic@fer.unizg.hr"
+      },
+      "license": {
+        "name": "CC0 1.0 Universal (CC0 1.0) Public Domain Dedication",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/"
+      }
+    },
+    "paths": {
+      "/albums": {
+        "get": {
+          "summary": "Get all albums with detailed information",
+          "description": "Fetches all albums including detailed information about songs, producers, and performers.",
+          "responses": {
+            "200": {
+              "description": "List of all albums with detailed info",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "status": {
+                        "type": "string",
+                        "example": "success"
+                      },
+                      "message": {
+                        "type": "string",
+                        "example": "Albums fetched successfully."
+                      },
+                      "data": {
+                        "type": "array",
+                        "items": {
+                          "$ref": "#/components/schemas/Album"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal server error"
+            }
+          }
+        },
+        "post": {
+          "summary": "Create a new album",
+          "description": "Creates a new album and its related data (songs, producers, performers).",
+          "operationId": "createAlbum",
+          "requestBody": {
+            "description": "The album data to create.",
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "album_title",
+                    "release_year",
+                    "number_of_singles",
+                    "songs",
+                    "producers",
+                    "performers"
+                  ],
+                  "properties": {
+                    "album_title": {
+                      "type": "string",
+                      "example": "My New Album"
+                    },
+                    "release_year": {
+                      "type": "integer",
+                      "example": 2024
+                    },
+                    "number_of_singles": {
+                      "type": "integer",
+                      "example": 5
+                    },
+                    "genre_name": {
+                      "type": "string",
+                      "example": "Pop"
+                    },
+                    "style_name": {
+                      "type": "string",
+                      "example": "Indie"
+                    },
+                    "rlabel_name": {
+                      "type": "string",
+                      "example": "Universal Music"
+                    },
+                    "country_name": {
+                      "type": "string",
+                      "example": "USA"
+                    },
+                    "type_name": {
+                      "type": "string",
+                      "example": "Studio"
+                    },
+                    "songs": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "required": [
+                          "song_title",
+                          "track_number",
+                          "duration"
+                        ],
+                        "properties": {
+                          "song_title": {
+                            "type": "string",
+                            "example": "Song Title"
+                          },
+                          "track_number": {
+                            "type": "integer",
+                            "example": 1
+                          },
+                          "duration": {
+                            "type": "string",
+                            "example": "03:30"
+                          }
+                        }
+                      }
+                    },
+                    "producers": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "required": [
+                          "artist_name"
+                        ],
+                        "properties": {
+                          "artist_name": {
+                            "type": "string",
+                            "example": "Producer Name"
+                          }
+                        }
+                      }
+                    },
+                    "performers": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "required": [
+                          "artist_name"
+                        ],
+                        "properties": {
+                          "artist_name": {
+                            "type": "string",
+                            "example": "Performer Name"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": {
+              "description": "Album and related data successfully created.",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "status": {
+                        "type": "string",
+                        "example": "success"
+                      },
+                      "message": {
+                        "type": "string",
+                        "example": "Album and related data inserted successfully."
+                      },
+                      "data": {
+                        "type": "object",
+                        "properties": {
+                          "album_id": {
+                            "type": "integer",
+                            "example": 123
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Invalid input data.",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "status": {
+                        "type": "string",
+                        "example": "error"
+                      },
+                      "message": {
+                        "type": "string",
+                        "example": "All data about album, songs, producers, and performers is necessary."
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal server error during data insertion or rollback.",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "status": {
+                        "type": "string",
+                        "example": "error"
+                      },
+                      "message": {
+                        "type": "string",
+                        "example": "Error inserting album with related data, changes rolled back."
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/albums/{id}": {
+        "get": {
+          "summary": "Get an album by ID with detailed information",
+          "description": "Fetches a single album by its ID, including details about songs, producers, and performers.",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "description": "ID of the album",
+              "schema": {
+                "type": "integer",
+                "format": "int64"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Album details with songs, producers, and performers",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Album"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Album not found"
+            },
+            "500": {
+              "description": "Internal server error"
+            }
+          }
+        },
+        "put": {
+          "summary": "Update an album by ID",
+          "description": "Update the details of an existing album by its ID.",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "description": "ID of the album to be updated",
+              "schema": {
+                "type": "integer",
+                "format": "int64"
+              }
+            }
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Album"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Album updated successfully",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Album"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Invalid data provided"
+            },
+            "404": {
+              "description": "Album not found"
+            },
+            "500": {
+              "description": "Internal server error"
+            }
+          }
+        },
+        "delete": {
+          "summary": "Delete an album by ID",
+          "description": "Deletes an album by its ID.",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "description": "ID of the album to be deleted",
+              "schema": {
+                "type": "integer",
+                "format": "int64"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Album deleted successfully"
+            },
+            "404": {
+              "description": "Album not found"
+            },
+            "500": {
+              "description": "Internal server error"
+            }
+          }
+        }
+      },
+      "/albums/{id}/songs": {
+        "get": {
+          "summary": "Get all songs from an album",
+          "description": "Fetches all songs from a specific album by its ID.",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "description": "ID of the album",
+              "schema": {
+                "type": "integer",
+                "format": "int64"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "List of songs in the album",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/Song"
+                    }
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "No songs found for the specified album"
+            },
+            "500": {
+              "description": "Internal server error"
+            }
+          }
+        }
+      },
+      "/albums/{id}/songs/{num}": {
+        "get": {
+          "summary": "Get a specific song by track number",
+          "description": "Fetches a specific song from an album by its track number.",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "description": "ID of the album",
+              "schema": {
+                "type": "integer",
+                "format": "int64"
+              }
+            },
+            {
+              "name": "num",
+              "in": "path",
+              "required": true,
+              "description": "Track number of the song",
+              "schema": {
+                "type": "integer",
+                "format": "int64"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Specific song details",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Song"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Song not found"
+            },
+            "500": {
+              "description": "Internal server error"
+            }
+          }
+        }
+      },
+      "/albums/{id}/producers": {
+        "get": {
+          "summary": "Get producers of an album",
+          "description": "Fetches all producers for a specific album by its ID.",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "description": "ID of the album",
+              "schema": {
+                "type": "integer",
+                "format": "int64"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "List of producers for the album",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/Producer"
+                    }
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "No producers found for the specified album"
+            },
+            "500": {
+              "description": "Internal server error"
+            }
+          }
+        }
+      },
+      "/albums/{id}/performers": {
+        "get": {
+          "summary": "Get performers of an album",
+          "description": "Fetches all performers for a specific album by its ID.",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "description": "ID of the album",
+              "schema": {
+                "type": "integer",
+                "format": "int64"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "List of performers for the album",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/Performer"
+                    }
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "No performers found for the specified album"
+            },
+            "500": {
+              "description": "Internal server error"
+            }
+          }
+        }
+      },
+      "/openapi.json": {
+        "get": {
+          "summary": "Get OpenAPI specification",
+          "description": "Fetches the OpenAPI specification of the API.",
+          "responses": {
+            "200": {
+              "description": "OpenAPI specification",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/OpenAPI"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "components": {
+      "schemas": {
+        "Album": {
+          "type": "object",
+          "properties": {
+            "album_id": {
+              "type": "integer",
+              "format": "int64",
+              "description": "Unique identifier of the album"
+            },
+            "album_title": {
+              "type": "string",
+              "description": "Title of the album"
+            },
+            "release_year": {
+              "type": "integer",
+              "format": "int64",
+              "description": "Year the album was released"
+            },
+            "number_of_singles": {
+              "type": "integer",
+              "format": "int64",
+              "description": "Number of singles released from the album"
+            },
+            "genre": {
+              "type": "string",
+              "description": "Genre of the album"
+            },
+            "style": {
+              "type": "string",
+              "description": "Style of the album"
+            },
+            "release_label": {
+              "type": "string",
+              "description": "Record label of the album"
+            },
+            "country": {
+              "type": "string",
+              "description": "Country where the album was released"
+            },
+            "type": {
+              "type": "string",
+              "description": "Type of album (e.g., studio, live)"
+            },
+            "songs": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/Song"
+              }
+            },
+            "producers": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/Producer"
+              }
+            },
+            "performers": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/Performer"
+              }
+            }
+          }
+        },
+        "Song": {
+          "type": "object",
+          "properties": {
+            "song_title": {
+              "type": "string",
+              "description": "Title of the song"
+            },
+            "track_number": {
+              "type": "integer",
+              "description": "Track number of the song in the album"
+            },
+            "duration": {
+              "type": "string",
+              "description": "Duration of the song"
+            }
+          }
+        },
+        "Producer": {
+          "type": "object",
+          "properties": {
+            "artist_name": {
+              "type": "string",
+              "description": "Name of the producer"
+            }
+          }
+        },
+        "Performer": {
+          "type": "object",
+          "properties": {
+            "artist_name": {
+              "type": "string",
+              "description": "Name of the performer"
+            }
+          }
+        }
+      }
+    }
+  }
+  
